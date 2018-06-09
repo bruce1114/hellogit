@@ -2,7 +2,7 @@
 #include<string>
 #include<sstream>
 #include<algorithm>
-#include<cmath>
+#include<vector>
 #include<cstdio>
 using namespace std;
 typedef struct student{
@@ -10,7 +10,7 @@ typedef struct student{
   bool sex;
   double score;
 }student;
-student s[1000];
+vector<student>s;
 bool cmp(student a,student b)
 {
   if(a.score!=b.score) return a.score>b.score;
@@ -24,19 +24,21 @@ int main()
   int cnt=0;
   while(getline(cin,temp))
   {
+    student tempp;
     stringstream ss;
     ss<<temp;
-    ss>>s[cnt].name;
-    s[cnt].name.pop_back();
+    ss>>tempp.name;
+    tempp.name.pop_back();
     ss>>temp;
-    if(temp[0]=='F') s[cnt].sex=false;
-    else s[cnt].sex=true;
-    ss>>s[cnt].score;
-    cnt++;
+    if(temp[0]=='F') tempp.sex=false;
+    else tempp.sex=true;
+    ss>>tempp.score;
+    s.push_back(tempp);
   }
   double avr=0;
   double avb=0,avg=0;
   int cntb=0,cntg=0;
+  cnt=s.size();
   for(int i=0;i<cnt;++i)
   {
     avr+=s[i].score;
@@ -45,7 +47,7 @@ int main()
   }
   avr=avr/cnt;
   avb/=cntb,avg/=cntg;
-  sort(s,s+cnt,cmp);
+  sort(s.begin(),s.end(),cmp);
   cout<<"all average: "<<avr<<endl;
   cout<<"boy average: "<<avb<<endl;
   cout<<"girl average: "<<avg<<endl;
