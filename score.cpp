@@ -1,9 +1,9 @@
 #include<iostream>
 #include<string>
 #include<sstream>
-#include<fstream>
 #include<algorithm>
 #include<cmath>
+#include<cstdio>
 using namespace std;
 typedef struct student{
   string name;
@@ -18,20 +18,18 @@ bool cmp(student a,student b)
 }
 int main()
 {
+  freopen("score.csv","r",stdin);
   string temp;
-  ifstream fin("score.csv");
-  getline(fin,temp);
+  getline(cin,temp);
   int cnt=0;
-  while(getline(fin,temp))
+  while(getline(cin,temp))
   {
     stringstream ss;
     ss<<temp;
     ss>>s[cnt].name;
-    int l=s[cnt].name.length();
-    s[cnt].name[l-1]=0;
-    string tempp;
-    ss>>tempp;
-    if(tempp[0]=='F') s[cnt].sex=false;
+    s[cnt].name.pop_back();
+    ss>>temp;
+    if(temp[0]=='F') s[cnt].sex=false;
     else s[cnt].sex=true;
     ss>>s[cnt].score;
     cnt++;
@@ -42,10 +40,7 @@ int main()
   for(int i=0;i<cnt;++i)
   {
     avr+=s[i].score;
-    if(s[i].sex)
-    {
-      cntb++,avb+=s[i].score;
-    }
+    if(s[i].sex) cntb++,avb+=s[i].score;
     else cntg++,avg+=s[i].score;
   }
   avr=avr/cnt;
